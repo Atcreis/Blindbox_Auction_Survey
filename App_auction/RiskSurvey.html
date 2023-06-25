@@ -1,0 +1,11 @@
+{{ block title }}
+    问卷2
+{{ endblock }}
+{{ block content }}
+    请您选择：
+    <p>注意：这一页的选择与您的部分报酬的获取方式有关，请根据个人情况选择更愿意接受的选项</p>
+    {% formfields %}
+
+    {{ next_button }}
+
+{{ endblock }}

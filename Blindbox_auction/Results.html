@@ -1,0 +1,19 @@
+{{ block title }}
+    拍卖结果
+{{ endblock }}
+
+{{ block content }}
+
+    <p>你的出价是 {{ player.bid }}. </p>
+    {{ if player.is_winner }}
+    <p>你的出价最高，赢得了这次拍卖</p>
+    {{ else }}
+    <p>
+        组内的最高出价是 {{ group.highest_bid }}.
+        因此，你没有拍得这件商品
+    </p>
+    {{ endif }}
+    {{ next_button }}
+{{ endblock }}
+
+

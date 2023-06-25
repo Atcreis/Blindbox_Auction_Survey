@@ -1,0 +1,69 @@
+{{ block title }}
+拍卖开始
+{{ endblock }}
+{{ block content }}
+    <p>拍卖商品： {{product}}.</p>
+    <p>注意：出价必须小于120</p>
+
+
+
+
+<table class="table">
+    <tr>
+        <th>当前最高价</th>
+        <td id="highest-bid"></td>
+    </tr>
+    <tr>
+        <th>出价：</th>
+        <td>
+            <input type="number" id="input-bid">
+            <button type="button" onclick="sendBid()">提交报价</button>
+        </td>
+    </tr>
+</table>
+
+
+<script>
+    let bidInput = document.getElementById('input-bid');
+    let highestBidDiv = document.getElementById('highest-bid');
+
+    bidInput.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            sendBid();
+        }
+    });
+
+    function sendBid() {
+        let bid = parseInt(bidInput.value);
+        if (isNaN(bid)) return;
+        liveSend({'bid': bid})
+        bidInput.value = '';
+    }
+
+
+    function cu(amount) {
+        return `${amount} 代币`;
+    }
+
+    function liveRecv(data) {
+        // javascript destructuring assignment
+        let {is_new_high_bid, highest_bid, highest_bidder} = data;
+        let highestBidderLabel = (highest_bidder === js_vars.my_id) ? '我的出价' : `玩家 ${highest_bidder}`;
+
+        highestBidDiv.innerText = `${cu(highest_bid)} (${highestBidderLabel})`;
+
+        if (is_new_high_bid) {
+            highestBidDiv.style.backgroundColor = 'lightgreen';
+            setTimeout(function () {
+                highestBidDiv.style.backgroundColor = '';
+            }, 1000);
+        }
+    }
+
+    window.addEventListener('DOMContentLoaded', (event) => {
+        liveSend({});
+    });
+
+</script>
+
+{{ endblock }}
