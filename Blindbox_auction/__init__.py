@@ -5,32 +5,33 @@ import random
 doc = """
 Blindbox Auction
 """
-products = [
-    "Product A：这里是商品描述",
-    "Product B",
-    "Product C",
-    "Product D",
-    "Product E",
-    "Product F：（盲盒商品）",
-]  # 商品列表
-products2 = [
-    "Product A：这里是商品描述",
-    "Product B",
-    "Product C",
-    "Product D",
-    "Product E",
-    "Product F：（盲盒商品)",
-]
-random.shuffle(products)
-random.shuffle(products2)
-products.extend(products2)
-print(products)
+
 
 
 class C(BaseConstants):
     NAME_IN_URL = 'Blindbox_auction'
     PLAYERS_PER_GROUP = 3
     NUM_ROUNDS = 3
+    products = [
+        "Product A：这里是商品描述",
+        "Product B",
+        "Product C",
+        "Product D",
+        "Product E",
+        "Product F：（盲盒商品）",
+    ]  # 商品列表
+    products2 = [
+        "Product A：这里是商品描述",
+        "Product B",
+        "Product C",
+        "Product D",
+        "Product E",
+        "Product F：（盲盒商品)",
+    ]
+    random.shuffle(products)
+    random.shuffle(products2)
+    products.extend(products2)
+    print(products)
 
 
 class Subsession(BaseSubsession):
@@ -94,7 +95,8 @@ class Bidding(Page):
 
     @staticmethod
     def vars_for_template(player: Player):
-
+        constants = C()
+        products = constants.products
         product = products[player.round_number - 1]
         return {"product": product}
 
